@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create New Event</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/new_event_style.css' %}">
+
+  <!-- Script allowing the drag-and-drop of selected image, associating it with the new event. -->
+  <script>
+    var image_id="";
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("image", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("image");
+      document.getElementById("demo").value = data;
+      ev.target.appendChild(document.getElementById(data));
+    }
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    <p><a href="/events">Your Events</a><a href="/logout">Logout</a></p>
+  </div>
+
+
+  <div id="main_content">
+
+    <!-- Image gallery for drag-and-drop event. -->
+    <div id="left_side">
+      <div class="lines">
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/1.jpg' %}" draggable="true" ondragstart="drag(event)" id="1">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/2.jpg' %}" draggable="true" ondragstart="drag(event)" id="2">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/3.jpg' %}" draggable="true" ondragstart="drag(event)" id="3">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/4.jpg' %}" draggable="true" ondragstart="drag(event)" id="4">
+        </div> 
+      </div>
+
+      <div class="lines">
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/5.jpg' %}" draggable="true" ondragstart="drag(event)" id="5">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/6.jpg' %}" draggable="true" ondragstart="drag(event)" id="6">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/7.jpg' %}" draggable="true" ondragstart="drag(event)" id="7">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/8.jpg' %}" draggable="true" ondragstart="drag(event)" id="8">
+        </div>
+      </div>
+
+      <div class="lines">
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/9.jpg' %}" draggable="true" ondragstart="drag(event)" id="9">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/10.jpg' %}" draggable="true" ondragstart="drag(event)" id="10">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/11.jpg' %}" draggable="true" ondragstart="drag(event)" id="11">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/12.jpg' %}" draggable="true" ondragstart="drag(event)" id="12">
+        </div>
+      </div>
+
+      <div class="lines">
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/13.jpg' %}" draggable="true" ondragstart="drag(event)" id="13">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/14.jpg' %}" draggable="true" ondragstart="drag(event)" id="14">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/15.jpg' %}" draggable="true" ondragstart="drag(event)" id="15">
+        </div>
+        <div class="image" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img src="{% static '/images/gallery/16.jpg' %}" draggable="true" ondragstart="drag(event)" id="16">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- New event creation form. -->
+    <div id="right_side">
+      <h1>Hello {{ logged_in_member.first_name }}! Create an event!</h1>
+      {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}         
+          <li style="color: red;">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+
+      <form action='/events/create/{{ member.id}}' method='post' class="form-group">
+        {% csrf_token %}
+        <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <input id="demo" name="demo" type="hidden" value="">
+        
+        <p>Title 
+          <input type="text" name="title" id="">
+        </p>
+        <p>Address
+          <input type="text" name="address" id="">
+        </p>
+        <p>City
+          <input type="text" name="city" id="">
+        </p>
+        <p>State
+          <input type="text" name="state" id="">
+        </p>
+        <p>Zip Code
+          <input type="text" name="zipcode" id="">
+        </p>
+        <p>About
+          <input type="text" name="description" id="">
+        </p>
+        <p>Date
+          <input type="date" name="date" id="">
+        </p>
+        <p>Time
+          <input type="time" name="time" id="">
+        </p>
+        <p>Category
+          <select name="category" id="">
+            <option value="0">Pick One</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Biking">Biking</option>
+            <option value="Camping">Camping</option>
+            <option value="Running">Running</option>
+            <option value="Rock Climbing">Rock Climbing</option>
+            <option value="Paddleboarding">Paddleboarding</option>
+            <option value="Kayaking">Kayaking</option>
+            <option value="Scuba Diving">Scuba Diving</option>
+          </select>
+        </p>
+
+        <div>
+          <a href="/events" class="button" style="margin-left: 5rem;">Cancel</a> 
+          <button>Submit</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>

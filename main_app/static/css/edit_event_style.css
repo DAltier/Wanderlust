@@ -1,0 +1,139 @@
+*{
+  padding: 0px auto;
+  margin: 0px auto;
+}
+
+
+#header {
+  width: inherit;
+  font-family: Tahoma;
+  height: 5rem;
+  margin: 0rem 1.5rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(75, 45, 6);
+  background-image: linear-gradient(rgb(152, 243, 99),rgb(70, 194, 70),rgb(53, 124, 45));
+}
+
+
+#header a {
+  margin-right: 2rem;
+  color: rgb(75, 45, 6);
+  font-size: 1.5rem;
+}
+
+
+#main_content {
+  min-height: 40rem;
+  width: inherit;
+  margin: 0rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  background: radial-gradient(rgb(241, 234, 162), rgb(245, 242, 226));
+}
+
+
+#right_side {
+  padding: 2rem;
+  width: 30rem;
+  display: inline-block;
+  justify-content: space-evenly;
+}
+
+
+.lines{
+  height: 8rem;
+  width: 36rem;
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-evenly;
+}
+
+
+img {
+  width: 8rem;
+}
+
+
+#div2 {
+  width: 9rem;
+  height: 6rem;
+  margin: 1rem;
+  padding: 0.1rem;
+  border: 1px solid black;
+}
+
+
+#left_side {
+  padding: 4rem;
+  width: 40rem;
+}
+
+
+p {
+  padding: 10px;
+  font-size: 2rem;
+  font-family: Georgia;
+}
+
+
+input, select {
+  float: right;
+  width: 18rem;
+  font-size: 1.1rem;
+  margin-right: 2rem;
+}
+
+
+button {
+  background-image: linear-gradient(rgb(152, 243, 99),rgb(70, 194, 70),rgb(53, 124, 45));
+  border: 1px solid black;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 5px 10px;
+  margin: 10px;
+  display: inline-block;
+}
+
+
+a.button {
+  background-image: linear-gradient(rgb(152, 243, 99),rgb(70, 194, 70),rgb(53, 124, 45));
+  border: 1px solid black;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 5px 10px;
+  margin: 10px;
+  display: inline-block;
+}
+
+
+footer {
+  width: inherit;
+  height: 5rem;
+  margin: 0rem 1.5rem;
+  color: rgb(75, 45, 6);
+  background-image: linear-gradient(rgb(152, 243, 99),rgb(70, 194, 70),rgb(53, 124, 45));
+}
+
+
+footer p {
+  float: right;
+  padding-right: 2rem;
+  font-family: 'Brush Script MT';
+  font-style: oblique; 
+  font-size: 4rem;
+  color: rgb(75, 45, 6);
+}
+

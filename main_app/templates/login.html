@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/register_style.css' %}">
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    <p><a href="/"><strong>Back</strong></a></p>
+  </div>
+
+
+
+  <div id="main_content" >
+
+    <!-- Login form with validations. -->
+    <img src="{% static '/images/login.jpg' %}" alt="nature image" style="width: 55%;">
+    <div class="box">
+
+      <div style="color: red; font-size: 14px;">
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+
+      <h3 class="h3 text-center">Login</h3>
+      <form action="/login" method="POST">
+        {%csrf_token%}
+        <p>
+          Email
+          <input type="email" name="email" id="">
+        </p>
+        <p>
+          Password
+          <input type="password" name="password" id="">
+        </p>
+        <button style="margin: auto;">Login</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>

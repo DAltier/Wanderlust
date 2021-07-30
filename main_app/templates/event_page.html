@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Page</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/event_page_style.css' %}">
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    <p><a href="/events"><strong>Your Events</strong></a><a href="/logout"><strong>Logout</strong></a></p>
+  </div>
+
+
+  <div id="main_content">
+
+    <!-- Information related to the selected event. -->
+    <div id="left_side">
+      <img src="{% get_static_prefix %}images/gallery/{{ this_event.picture_id }}.jpg" alt="event picture" style="width: 28rem; margin-bottom: 1.2rem;">
+      <p class="awesome">{{ this_event.title }}</p>
+      <p class="awesome">{{ this_event.address }}</p>
+      <p class="awesome">{{ this_event.city }}, {{ this_event.state }} {{ this_event.zipcode }}</p>
+      <p class="awesome">{{ this_event.date }} {{ this_event.time }}</p>
+      <p class="awesome">Creator: {{ this_event.creator.first_name }}</p>
+
+      <p style="margin: 1rem 0rem; font-size: 1.2rem;">Number of people who joined: {{ count_of_members_of_this_event }}</p>
+      {% if this_event.creator.id == logged_in_member.id %}
+          <a href="/events/{{ this_event.id }}/edit" class="button">Edit your event</a> 
+          <a href="/events/{{ this_event.id }}/destroy" class="button">Delete your event</a>
+      {% else %}
+          {% if this_event in logged_in_member.events.all %}
+          <a href="/events/cancel/{{ this_event.id }}" class="button">Cancel this event</a>
+          {% else %}
+          <a href="/events/join/{{ this_event.id }}" class="button">Join this event</a>
+          {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- Current and future weather forecast for the event's location.  -->
+    <div id="middle_side">
+
+      <p id="weather_title">Current Weather Here</p>
+      <p>Temperature: {{ api_weather_today.main.temp }} ℉</p>
+      <p>Feels Like: {{ api_weather_today.main.feels_like }} ℉</p>
+      <p>Min Temp: {{ api_weather_today.main.temp_min }} ℉</p>
+      <p>Max Temp: {{ api_weather_today.main.temp_max }} ℉</p>
+      <br>
+      <p>Wind Speed: {{ api_weather_today.wind.speed }} miles/hour</p>
+      <p>Humidity: {{ api_weather_today.main.humidity }}%</p>
+
+      <div id="weather_forecast_better_table2">
+        <table style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+          <thead>
+            <tr>
+              <th></th>
+              <th>{{ next_five_days.0 }}</th>
+              <th>{{ next_five_days.1 }}</th>
+              <th>{{ next_five_days.2 }}</th>
+              <th>{{ next_five_days.3 }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>6 AM</td>
+              <td>{{ api_data_forecast.0 }} ℉</td>
+              <td>{{ api_data_forecast.5 }} ℉</td>
+              <td>{{ api_data_forecast.10 }} ℉</td>
+              <td>{{ api_data_forecast.15 }} ℉</td>
+            </tr>
+            <tr>
+              <td>9 AM</td>
+              <td>{{ api_data_forecast.1 }} ℉</td>
+              <td>{{ api_data_forecast.6 }} ℉</td>
+              <td>{{ api_data_forecast.11 }} ℉</td>
+              <td>{{ api_data_forecast.16 }} ℉</td>
+            </tr>
+            <tr>
+              <td>12 PM</td>
+              <td>{{ api_data_forecast.2 }} ℉</td>
+              <td>{{ api_data_forecast.7 }} ℉</td>
+              <td>{{ api_data_forecast.12 }} ℉</td>
+              <td>{{ api_data_forecast.17 }} ℉</td>
+            </tr>
+            <tr>
+              <td>3 PM</td>
+              <td>{{ api_data_forecast.3 }} ℉</td>
+              <td>{{ api_data_forecast.8 }} ℉</td>
+              <td>{{ api_data_forecast.13 }} ℉</td>
+              <td>{{ api_data_forecast.18 }} ℉</td>
+            </tr>
+            <tr>
+              <td>6 PM</td>
+              <td>{{ api_data_forecast.4 }} ℉</td>
+              <td>{{ api_data_forecast.9 }} ℉</td>
+              <td>{{ api_data_forecast.14 }} ℉</td>
+              <td>{{ api_data_forecast.19 }} ℉</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><span style="text-decoration: underline">About</span>: <span style="font-weight: lighter;">{{ this_event.description }}</span></p>
+    </div>
+
+
+    <div id="right_side">
+      <div id="maps">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- This is the javascript for the google maps! -->
+  <!-- Allows us to refer to the variable 'coordinate' in our javascript -->
+  {{ coordinates|json_script:"coordinates" }}
+  <script>
+    const myCoordinates = JSON.parse(document.getElementById('coordinates').textContent);
+
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: myCoordinates,
+      });
+      const marker = new google.maps.Marker({
+        position: myCoordinates,
+        map: map,
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxORw3xLuWMPW_f_X2gl61__rXwl7DF6o&callback=initMap&libraries=&v=weekly" 
+    async></script>
+
+
+  <!-- Footer  -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>

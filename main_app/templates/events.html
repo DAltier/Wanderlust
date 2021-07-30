@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Events</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/events_style.css' %}">
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    <p><a href="/events/new"><strong>Create a new event</strong></a><a href="/logout"><strong>Logout</strong></a></p>
+  </div>
+
+
+  <div id="main_content">
+
+    <!-- Events navigation menu -->
+    <div id="navigation_bar">
+      <a href="/events/hiking">Hiking</a> |
+      <a href="/events/biking">Biking</a> |
+      <a href="/events/camping">Camping</a> |
+      <a href="/events/running">Running</a> |
+      <a href="/events/rock_climbing">Rock Climbing</a> |
+      <a href="/events/paddleboarding">Paddleboarding</a> |
+      <a href="/events/scuba_diving">Scuba Diving</a> |
+      <a href="/events/kayaking">Kayaking</a>
+    </div>
+
+
+    <div id="main_body">
+      <h1>Hey {{ logged_in_member.first_name }}  </h1>
+      <h2>Events you've joined or created:</h3>
+      
+      <!-- Table containing all the events that the current user has created or joined. -->
+      <div id="your_table">
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Category</th>
+              <th>Creator</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in logged_in_member_events %}
+              <tr>
+                <td><a href="/events/{{ event.id }}">{{ event.title }}</a></td>
+                <td> {{ event.address }} {{ event.city }}, {{ event.state }} {{ event.zipcode }}</td>
+                <td> {{ event.date }}</td>
+                <td> {{event.time }} </td>
+                <td> {{ event.category }}</td>
+                <td> {{ event.creator.first_name }} {{ event.creator.last_name }} </td>
+                {% if event.creator.id == logged_in_member.id %}
+                  <td>
+                    <a href="/events/{{ event.id }}/edit">Edit</a> |
+                    <a href="/events/{{ event.id }}/destroy">Delete</a> 
+                  </td>
+                {% else %}
+                  <td>
+                    <a href="/events/cancel/{{ event.id }}">Cancel</a>
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>All other events:</h3>
+      <!-- Table containing all the events created by other users that the logged-in user has not joined. -->
+      <div id="other_table">
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Category</th>
+              <th>Creator</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in all_other_events %}
+              <tr>
+                <td><a href="/events/{{ event.id }}">{{ event.title }}</a></td>
+                <td> {{ event.address }} {{ event.city }}, {{ event.state }} {{ event.zipcode }}</td>
+                <td> {{ event.date }}</td>
+                <td> {{event.time }} </td>
+                <td> {{ event.category }}</td>
+                <td> {{ event.creator.first_name }} {{ event.creator.last_name }} </td>
+                {% if event.creator.id == logged_in_member.id %}
+                  <td>
+                    <a href="/events/{{ event.id }}/edit">Edit</a> |
+                    <a href="/events/{{ event.id }}/destroy">Delete</a> 
+                  </td>
+                {% else %}
+                  <td>
+                    <a href="/events/join/{{ event.id }}">Join</a>
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <!-- Footer -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>

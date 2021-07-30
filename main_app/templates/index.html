@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outdoor Activities</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    <p><a href="/register_view"><strong>SignUp</strong></a><a href="/login_view"><strong>Login</strong></a></p>
+  </div>
+
+
+  <div id="main_content">
+
+    <!-- Side navigation menu. Leads to a page showing the existing events for the selected category. -->
+    <div id="navigation_bar">
+      <h3>Outdoor Activities:</h3>
+      <ul>
+        <li><a href="/events/hiking"><strong>Hiking</strong></a></li>
+        <li><a href="/events/biking"><strong>Biking</strong></a></li>
+        <li><a href="/events/camping"><strong>Camping</strong></a></li>
+        <li><a href="/events/running"><strong>Running</strong></a></li>
+        <li><a href="/events/rock_climbing"><strong>Rock Climbing</strong></a></li>
+        <li><a href="/events/paddleboarding"><strong>Paddleboarding</strong></a></li>
+        <li><a href="/events/kayaking"><strong>Scuba Diving</strong></a></li>
+        <li><a href="/events/scuba_diving"><strong>Kayaking</strong></a></li>
+      </ul>
+    </div>
+
+    <div id="content">
+
+
+      <!-- Selecting any of the events leads to a page showing the existing events for the selected category. -->
+      <div class="box">
+        <img src="{% static '/images/hiking.jpg' %}" alt="Hiking" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/hiking">Hiking</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/biking.jpg' %}" alt="Biking" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/biking">Biking</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/camping.jpg' %}" alt="Camping" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/camping">Camping</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/running.jpg' %}" alt="Running" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/running">Running</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/rock_climbing.jpg' %}" alt="Rock Climbing" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/rock_climbing">Rock Climbing</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/paddleboarding.jpg' %}" alt="Paddleboarding" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/paddleboarding">Paddleboarding</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/kayaking.jpg' %}" alt="Kayaking" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/kayaking">Kayaking</a></h3>
+      </div>
+
+      <div class="box">
+        <img src="{% static '/images/scuba_diving.jpg' %}" alt="Scuba Diving" style="width: 16rem;">
+        <h3 style="text-align: center;"><a href="/events/scuba_diving">Scuba Diving</a></h3>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>

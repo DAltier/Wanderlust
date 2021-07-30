@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Rock Climbing Events</title>
+
+  <!-- Loading static CSS file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/all_activities_style.css' %}">
+</head>
+
+
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <img src="{% static '/images/logo.jpg' %}" alt="logo" style="width: 7.2rem;">
+    <h1 style=" font-weight: bold; width: 70rem">Outdoor activities - Plan Your Next Adventure</h1>
+    {% if request.session.uuid %} 
+      <p><a href="/events/new"><strong>New Event</strong></a><a href="/events"><strong>Your Events</strong></a><a href="/logout"><strong>Logout</strong></a></p>
+    {% else %}
+      <p><a href="/register_view"><strong>SignUp</strong></a><a href="/login_view"><strong>Login</strong></a><a href="/"><strong>Back</strong></a></p>
+    {% endif %}
+  </div>
+
+
+  <div id="main_content">
+    <h1>All Rock Climbing Events!</h1>
+
+    <div id="events">
+
+      {% for event in all_events %}
+        <div id="event">
+          <img src="{% get_static_prefix %}images/gallery/{{ event.picture_id }}.jpg" alt="event picture" style="width: 14rem; margin-bottom: 1rem;">
+          {% if request.session.uuid %} 
+            <p><a href="/events/{{ event.id }}">{{ event.title }}</a></p>
+          {% else %}
+            <p>{{ event.title }}</p>
+          {% endif %}
+          <p>{{ event.address }} {{ event.city }}, {{ event.state }} {{ event.zipcode }}</p>
+          <p>{{ event.date }} {{event.time }}</p>
+          <p>Organized by: {{ event.creator.first_name }} {{ event.creator.last_name }}</p>
+
+          {% if request.session.uuid %} 
+            {% if event.creator.id == logged_in_member.id %}
+              <a href="/events/{{ event.id }}/edit">Edit</a>
+              <a href="/events/{{ event.id }}/destroy">Delete</a> 
+            {% elif event in all_other_events %}
+              <a href="/events/join/{{ event.id }}">Join</a>
+            {% else %}
+              <a href="/events/cancel/{{ event.id }}">Cancel</a>
+            {% endif %}
+          {% else %}
+            <p><a href="/register_event_view/{{ event.id }}">Sign Up</a> | <a href="/login_event_view/{{ event.id }}">Login</a></p>
+          {% endif %}
+        </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+
+  
+  <!-- Footer -->
+  <footer>
+    <p>Not all who wander are lost!</p>
+  </footer>
+
+
+</body>
+</html>
